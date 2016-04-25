@@ -3,14 +3,14 @@ import org.scalatest.FunSuite
  
 class StackTest extends FunSuite {
  
-  test("Stack length") {
+  test("Stack length()") {
   	val s = new ProgramStack()
     assert(s.length() == 0)
   	s.push(5)
     assert(s.length() == 1)
   }
 
-  test("Stack push") {
+  test("Stack push(value : Int)") {
   	val s = new ProgramStack()
   	s.push(5)
     assert(s.top() == 5)
@@ -18,7 +18,7 @@ class StackTest extends FunSuite {
     assert(s.top() == 10)
   }
 
-  test("Stack pop") {
+  test("Stack pop()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -31,7 +31,7 @@ class StackTest extends FunSuite {
    	assert(s.length() == 0)
   }
 
-  test("Stack add") {
+  test("Stack add()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -42,7 +42,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 11)
   }
 
-  test("Stack subtract") {
+  test("Stack subtract()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -53,7 +53,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 9)
   }
 
-  test("Stack multiply") {
+  test("Stack multiply()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -64,7 +64,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 20)
   }
 
-  test("Stack divide") {
+  test("Stack divide()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -75,7 +75,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 5)
   }
 
-  test("Stack mod") {
+  test("Stack mod()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -86,7 +86,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 1)
   }
 
-  test("Stack mod negative") {
+  test("Stack mod() negative") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(-10)
@@ -97,7 +97,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 2)
   }
 
-  test("Stack not (zero)") {
+  test("Stack not() (zero)") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -108,7 +108,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 1)
   }
 
-  test("Stack not (non-zero)") {
+  test("Stack not() (non-zero)") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -119,7 +119,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 0)
   }
 
-  test("Stack greater (is greater)") {
+  test("Stack greater() (is greater)") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -130,7 +130,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 1)
   }
 
-  test("Stack greater (is not greater)") {
+  test("Stack greater() (is not greater)") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(1)
@@ -141,7 +141,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 0)
   }
 
-  test("Stack duplicate") {
+  test("Stack duplicate()") {
   	val s = new ProgramStack()
   	s.push(5)
     s.push(10)
@@ -151,7 +151,7 @@ class StackTest extends FunSuite {
    	assert(s.top() == 10)
   }
 
-  test("Stack roll") {
+  test("Stack roll()") {
   	val s = new ProgramStack()
   	s.push(12)
     s.push(20)
@@ -169,7 +169,7 @@ class StackTest extends FunSuite {
    	assert(s.pop() == 12)
   }
 
-  test("Stack roll (negative)") {
+  test("Stack roll() (negative)") {
   	val s = new ProgramStack()
   	s.push(12)
     s.push(20)
