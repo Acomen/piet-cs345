@@ -97,5 +97,96 @@ class StackTest extends FunSuite {
    	assert(s.top() == 2)
   }
 
+  test("Stack not (zero)") {
+  	val s = new ProgramStack()
+  	s.push(5)
+    s.push(10)
+    s.push(0)
+    assert(s.length() == 3)
+    s.not()
+   	assert(s.length() == 3)
+   	assert(s.top() == 1)
+  }
+
+  test("Stack not (non-zero)") {
+  	val s = new ProgramStack()
+  	s.push(5)
+    s.push(10)
+    s.push(3)
+    assert(s.length() == 3)
+    s.not()
+   	assert(s.length() == 3)
+   	assert(s.top() == 0)
+  }
+
+  test("Stack greater (is greater)") {
+  	val s = new ProgramStack()
+  	s.push(5)
+    s.push(10)
+    s.push(3)
+    assert(s.length() == 3)
+    s.greater()
+   	assert(s.length() == 2)
+   	assert(s.top() == 1)
+  }
+
+  test("Stack greater (is not greater)") {
+  	val s = new ProgramStack()
+  	s.push(5)
+    s.push(1)
+    s.push(3)
+    assert(s.length() == 3)
+    s.greater()
+   	assert(s.length() == 2)
+   	assert(s.top() == 0)
+  }
+
+  test("Stack duplicate") {
+  	val s = new ProgramStack()
+  	s.push(5)
+    s.push(10)
+    assert(s.length() == 2)
+    s.duplicate()
+   	assert(s.length() == 3)
+   	assert(s.top() == 10)
+  }
+
+  test("Stack roll") {
+  	val s = new ProgramStack()
+  	s.push(12)
+    s.push(20)
+    s.push(15)
+    s.push(10)
+    s.push(5)
+    s.push(3)
+    s.push(2)
+    s.roll()
+   	assert(s.length() == 5)
+   	assert(s.pop() == 15)
+   	assert(s.pop() == 5)
+   	assert(s.pop() == 10)
+   	assert(s.pop() == 20)
+   	assert(s.pop() == 12)
+  }
+
+  test("Stack roll (negative)") {
+  	val s = new ProgramStack()
+  	s.push(12)
+    s.push(20)
+    s.push(15)
+    s.push(10)
+    s.push(5)
+    s.push(3)
+    s.push(-2)
+    s.roll()
+   	assert(s.length() == 5)
+   	assert(s.pop() == 10)
+   	assert(s.pop() == 15)
+   	assert(s.pop() == 5)
+   	assert(s.pop() == 20)
+   	assert(s.pop() == 12)
+
+  }
+
 
 }
