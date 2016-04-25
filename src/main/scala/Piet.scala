@@ -150,6 +150,23 @@ class ProgramStack{
 	}
 
 	/*
+	 * Takes in a value from STDIN and pushes it onto the stack. 
+	 */
+	def in() = {
+		val input = scala.Console.readInt
+		stack = stack.push(input)
+	}
+
+	/*
+	 * Pops the top value off of the stack and prints it to STDOUT
+	 */
+	def out() = {
+		val output = stack.pop()
+		print(output)
+	}
+
+
+	/*
 	 * Returns the top value on the stack
 	 */
 	def top() : Int = {
