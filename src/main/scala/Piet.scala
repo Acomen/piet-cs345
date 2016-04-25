@@ -12,23 +12,20 @@ import scala.collection.mutable
 class ProgramStack{
 	var stack = new mutable.Stack[Int]()
 
-	/* 
-	 *	Pushes a value to the stack
+	/* Pushes a value to the stack 
 	 */
 	def push(x: Int) = {
 		stack.push(x)
 	}
 
-	/*
-	 * Pops the top value off the stack
+	/* Pops the top value off the stack 
 	 */ 
 	def pop() : Int = {
 		val item = stack.pop()
 		return item
 	}
 
-	/*
-	 * Pops the top two values off the stack, adds them,
+	/* Pops the top two values off the stack, adds them,
 	 * and then pushes the result back onto the stack
 	 */
 	def add() = {
@@ -37,8 +34,7 @@ class ProgramStack{
 		stack.push(second + first)
 	}
 
-	/*
-	 * Pops the top two values off the stack, subtracts the
+	/* Pops the top two values off the stack, subtracts the
 	 * first value from the second value and then pushes the
 	 * result back onto the stack
 	 */
@@ -48,8 +44,7 @@ class ProgramStack{
 		stack.push(second - first)
 	}
 
-	/*
-	 * Pops the top two values off the stack, multiplies them,
+	/* Pops the top two values off the stack, multiplies them,
 	 * and then pushes the result back onto the stack
 	 */
 	def multiply() = {
@@ -58,8 +53,7 @@ class ProgramStack{
 		stack.push(second * first)
 	}
 
-	/*
-	 * Pops the top two values off the stack, divides the second value
+	/* Pops the top two values off the stack, divides the second value
 	 * by the first value, and then puhses the result back onto the stack
 	 */
 	def divide() = {
@@ -68,8 +62,7 @@ class ProgramStack{
 		stack.push(second / first)
 	}
 
-	/*
-	 * Pops the top two values off the stack, calculates the second value
+	/* Pops the top two values off the stack, calculates the second value
 	 * modulo the first value, and pushes the result back on the stack.
 	 * Note: return the 'least positive residue'
 	 */
@@ -83,8 +76,7 @@ class ProgramStack{
 		stack.push(mod)
 	}
 
-	/*
-	 * If the top value of the stack is non-zero, replace it zero,
+	/* If the top value of the stack is non-zero, replace it zero,
 	 * otherwise replace it with 1.
 	 */
 	def not() = {
@@ -96,8 +88,7 @@ class ProgramStack{
 		}
 	}
 
-	/*
-	 * Pops the top two values off the stock. If the second value is greater
+	/* Pops the top two values off the stock. If the second value is greater
 	 * than the first value, push 1 onto the stack, otherwise push 0.
 	 */
 	def greater() = {
@@ -110,16 +101,14 @@ class ProgramStack{
 		}
 	}
 
-	/*
-	 * Pushes a copy of the top value onto the stack.
+	/* Pushes a copy of the top value onto the stack.
 	 */
 	def duplicate() = {
 		val top = stack.top
 		stack.push(top)
 	}
 
-	/*
-	 * Pops the top two values off the stack, and rolls the stack to a depth
+	/* Pops the top two values off the stack, and rolls the stack to a depth
 	 * equal to the second value, by a number of rolls equal to the first value.
 	 * 
 	 * If the first value is negative, roll in the opposite direction
@@ -148,16 +137,14 @@ class ProgramStack{
 		}
 	}
 
-	/*
-	 * Takes in a value from STDIN and pushes it onto the stack. 
+	/* Takes in a value from STDIN and pushes it onto the stack. 
 	 */
 	def in() = {
 		val input = scala.Console.readInt
 		stack.push(input)
 	}
 
-	/*
-	 * Pops the top value off of the stack and prints it to STDOUT
+	/* Pops the top value off of the stack and prints it to STDOUT
 	 */
 	def out() = {
 		val output = stack.pop()
@@ -165,15 +152,13 @@ class ProgramStack{
 	}
 
 
-	/*
-	 * Returns the top value on the stack
+	/* Returns the top value on the stack
 	 */
 	def top() : Int = {
 		return stack.top
 	}
 
-	/*
-	 * Returns the number of elements in the stack
+	/* Returns the number of elements in the stack
 	 */
 	def length() : Int = {
 		return stack.length
