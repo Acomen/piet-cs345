@@ -16,7 +16,7 @@ class ProgramStack{
 	 *	Pushes a value to the stack
 	 */
 	def push(x: Int) = {
-		stack = stack.push(x)
+		stack.push(x)
 	}
 
 	/*
@@ -24,7 +24,6 @@ class ProgramStack{
 	 */ 
 	def pop() : Int = {
 		val item = stack.pop()
-		stack = stack
 		return item
 	}
 
@@ -35,7 +34,7 @@ class ProgramStack{
 	def add() = {
 		val first = stack.pop()
 		val second = stack.pop()
-		stack = stack.push(second + first)
+		stack.push(second + first)
 	}
 
 	/*
@@ -46,7 +45,7 @@ class ProgramStack{
 	def subtract() = {
 		val first = stack.pop()
 		val second = stack.pop()
-		stack = stack.push(second - first)
+		stack.push(second - first)
 	}
 
 	/*
@@ -56,7 +55,7 @@ class ProgramStack{
 	def multiply() = {
 		val first = stack.pop()
 		val second = stack.pop()
-		stack = stack.push(second * first)
+		stack.push(second * first)
 	}
 
 	/*
@@ -66,7 +65,7 @@ class ProgramStack{
 	def divide() = {
 		val first = stack.pop()
 		val second = stack.pop()
-		stack = stack.push(second / first)
+		stack.push(second / first)
 	}
 
 	/*
@@ -81,7 +80,7 @@ class ProgramStack{
 		if(mod < 0){
 			mod += first
 		}
-		stack = stack.push(mod)
+		stack.push(mod)
 	}
 
 	/*
@@ -91,9 +90,9 @@ class ProgramStack{
 	def not() = {
 		val top = stack.pop()
 		if(top == 0){
-			stack = stack.push(1)
+			stack.push(1)
 		}else{
-			stack = stack.push(0)
+			stack.push(0)
 		}
 	}
 
@@ -105,9 +104,9 @@ class ProgramStack{
 		val first = stack.pop()
 		val second = stack.pop()
 		if(second > first){
-			stack = stack.push(1)
+			stack.push(1)
 		}else{
-			stack = stack.push(0)
+			stack.push(0)
 		}
 	}
 
@@ -116,7 +115,7 @@ class ProgramStack{
 	 */
 	def duplicate() = {
 		val top = stack.top
-		stack = stack.push(top)
+		stack.push(top)
 	}
 
 	/*
@@ -154,7 +153,7 @@ class ProgramStack{
 	 */
 	def in() = {
 		val input = scala.Console.readInt
-		stack = stack.push(input)
+		stack.push(input)
 	}
 
 	/*
