@@ -1,5 +1,13 @@
 package pietcs345
 import scala.collection.mutable
+import java.io.File
+import javax.imageio.ImageIO
+
+object Piet {
+  def main(args: Array[String]) {
+  	val photo = ImageIO.read(new File("src/main/resources/piet_hello.png"))
+  }
+}
 
 /*
  *	Functions as the stack used in evaluating a piet program.
