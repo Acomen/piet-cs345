@@ -5,7 +5,25 @@ import javax.imageio.ImageIO
 
 object Piet {
   def main(args: Array[String]) {
-  	val photo = ImageIO.read(new File("src/main/resources/piet_hello.png"))
+  	val photo = ImageIO.read(new File("src/main/resources/piet_hello_2.gif"))
+  	var arr = Array.ofDim[Int](photo.getWidth, photo.getHeight)
+  	for(i <- 0 until photo.getWidth){
+  		for(j <- 0 until photo.getHeight){
+  			arr(i)(j) = photo.getRGB(i, j)
+  		}
+  	}
+
+  	var s = ""
+  	for(i <- 0 until photo.getWidth){
+  		s = s + "["
+  		for(j <- 0 until photo.getHeight){
+  			s = s + Integer.toHexString(arr(i)(j)) + ","
+  		}
+  		s = s + "]\n"
+  	}
+
+  	println(s)
+
   }
 }
 
