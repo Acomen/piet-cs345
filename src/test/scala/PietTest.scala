@@ -2,29 +2,67 @@ package pietcs345
 import org.scalatest.FunSuite
 
 class CodelTest extends FunSuite{
-  test("Testing light red lightness"){
+  test("Testing light red"){
     val c = new Codel(Light_Red())
+    assert(c.hue == Red())
     assert(c.lightness == Light())
   }
 
-  test("Testing dark red lightness"){
+  test("Testing normal red"){
+    val c = new Codel(Normal_Red())
+    assert(c.hue == Red())
+    assert(c.lightness == Normal())
+  }
+
+  test("Testing dark red"){
     val c = new Codel(Dark_Red())
+    assert(c.hue == Red())
     assert(c.lightness == Dark())
   }
 
-  test("Testing light yellow lightness"){
+  test("Testing dark cyan"){
+    val c = new Codel(Dark_Cyan())
+    assert(c.hue == Cyan())
+    assert(c.lightness == Dark())
+  }
+
+  test("Testing light yellow"){
     val c = new Codel(Light_Yellow())
-    assert(c.lightness == Light())    
+    assert(c.hue == Yellow())
+    assert(c.lightness == Light())
   }
 
-  test("Testing black lightness"){
-    val c = new Codel(Normal_Black())
+  test("Testing dark blue"){
+    val c = new Codel(Dark_Blue())
+    assert(c.hue == Blue())
+    assert(c.lightness == Dark())
+  }
+
+  test("Testing normal magenta"){
+    val c = new Codel(Normal_Magenta())
+    assert(c.hue == Magenta())
     assert(c.lightness == Normal())
   }
 
-  test("Testing white lightness"){
-    val c = new Codel(Normal_White())
-    assert(c.lightness == Normal())
+  test("Testing light green"){
+    val c = new Codel(Light_Green())
+    assert(c.hue == Green())
+    assert(c.lightness == Light())
+  }
+
+
+  test("Testing black"){
+    val c = new Codel(Black())
+    assert(c.lightness == null)
+    assert(c.hue == null)
+    assert(c.color == Black())
+  }
+
+  test("Testing white"){
+    val c = new Codel(White())
+    assert(c.lightness == null)
+    assert(c.hue == null)
+    assert(c.color == White())
   }
 
 

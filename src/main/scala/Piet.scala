@@ -11,6 +11,18 @@ case class Light() extends Lightness
 case class Normal() extends Lightness
 case class Dark() extends Lightness
 
+/* The 6 different hue's that appear
+ * in a piet program
+ *
+ */
+sealed trait Hue
+case class Red() extends Hue
+case class Yellow() extends Hue
+case class Green() extends Hue
+case class Cyan() extends Hue
+case class Blue() extends Hue
+case class Magenta() extends Hue
+
 /* The 18 colors in a Piet Program
  */
 sealed trait Color
@@ -32,8 +44,8 @@ case class Dark_Blue() extends Color
 case class Light_Magenta() extends Color
 case class Normal_Magenta() extends Color
 case class Dark_Magenta() extends Color
-case class Normal_Black() extends Color
-case class Normal_White() extends Color
+case class Black() extends Color
+case class White() extends Color
 
 
 object Piet {
@@ -63,23 +75,41 @@ object Piet {
 
 
 /* A codel represents a pixel in a Piet program. Pass in a color,
- * and Codel(color) determines the hue and lightness, which are used
- * when interpreting a Piet program 
+ * and Codel(Color) determines the hue and lightness, which are used
+ * when interpreting a Piet program. Hue and lightness are encoded 
+ * separately to make calculations more compact during interpretation
  */
-class Codel(val color: Color){
-	val lightness = color match {
+class Codel(val value: Color){
+	val lightness = value match {
 		case s:Color if s == Light_Red() || s == Light_Yellow() || 
-						s == Light_Green || s == Light_Cyan() || 
-						s == Light_Blue() || s == Light_Magenta => Light()
+						s == Light_Green() || s == Light_Cyan() || 
+						s == Light_Blue() || s == Light_Magenta() => Light()
 		case s:Color if s == Normal_Red() || s == Normal_Yellow() || 
-						s == Normal_Green || s == Normal_Cyan() || 
-						s == Normal_Blue() || s == Normal_Magenta => Normal()
+						s == Normal_Green() || s == Normal_Cyan() || 
+						s == Normal_Blue() || s == Normal_Magenta() => Normal()
 		case s:Color if s == Dark_Red() || s == Dark_Yellow() || 
-						s == Dark_Green || s == Dark_Cyan() || 
-						s == Dark_Blue() || s == Dark_Magenta => Dark()
-		case s: Color if s == Normal_Black() || s == Normal_White() => Normal()
+						s == Dark_Green() || s == Dark_Cyan() || 
+						s == Dark_Blue() || s == Dark_Magenta() => Dark()
+		case s:Color if s == Black() || s == White() => null
 	}
 
+	val hue = value match {
+		case s:Color if s == Light_Red() || s == Normal_Red() ||
+						s == Dark_Red() => Red()
+		case s:Color if s == Light_Yellow() || s == Normal_Yellow() ||
+						s == Dark_Yellow() => Yellow()
+		case s:Color if s == Light_Green() || s == Normal_Green() ||
+						s == Dark_Green() => Green()
+		case s:Color if s == Light_Cyan() || s == Normal_Cyan() ||
+						s == Dark_Cyan() => Cyan()
+		case s:Color if s == Light_Blue() || s == Normal_Blue() ||
+						s == Dark_Blue() => Blue()
+		case s:Color if s == Light_Magenta() || s == Normal_Magenta() ||
+						s == Dark_Magenta() => Magenta()
+		case s:Color if s == Black() || s == White() => null
+	}
+
+	val color = value
 }
 
 /*	Functions as the stack used in evaluating a piet program.
