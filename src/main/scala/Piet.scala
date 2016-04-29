@@ -77,6 +77,7 @@ class Codel(val color: Color){
 		case s:Color if s == Dark_Red() || s == Dark_Yellow() || 
 						s == Dark_Green || s == Dark_Cyan() || 
 						s == Dark_Blue() || s == Dark_Magenta => Dark()
+		case s: Color if s == Black() || s == White() => Normal()
 	}
 
 }
