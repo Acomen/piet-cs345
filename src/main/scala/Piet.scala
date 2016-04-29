@@ -106,12 +106,27 @@ class Codel(val value: Color){
 	 */
 	def get_lightness_difference(other: Codel) : Int = {
 		val light_cycle = Array[Lightness](Light(), Normal(), Dark())
-		val this_light = lightness
 
+		return get_difference(lightness, other.lightness, light_cycle)
+	}
+
+	/* Returns the difference in the hue between two codels
+	 * The hue cycle is: Red -> Yellow -> Green -> Cyan -> Blue -> Magenta -> Red
+	 */
+	def get_hue_difference(other: Codel) : Int = {
+		val hue_cycle = Array[Hue](Red(), Yellow(), Green(), Cyan(), Blue(), Magenta())
+
+		return get_difference(hue, other.hue, hue_cycle)
+	}
+
+	/* Generic function to return the difference between two values given
+	 * a cycle. 
+	 */
+	def get_difference[T](value : T, other_value: T, cycle : Array[T]) : Int = {
 		var index = 0
 		var matched = false
 		while(!matched){
-			if(lightness == light_cycle(index))
+			if(value == cycle(index))
 				matched = true
 			else
 				index = index + 1
@@ -120,10 +135,10 @@ class Codel(val value: Color){
 		var count = 0
 		matched = false
 		while(!matched){
-			if(index >= light_cycle.length)
+			if(index >= cycle.length)
 				index = 0
 
-			if(other.lightness == light_cycle(index))
+			if(other_value == cycle(index))
 				matched = true
 			else
 				count = count+1

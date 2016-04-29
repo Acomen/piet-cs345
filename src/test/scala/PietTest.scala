@@ -67,31 +67,31 @@ class CodelTest extends FunSuite{
 
   test("Lightness difference between light and dark"){
     val c1 = new Codel(Light_Blue())
-    val c2 = new Codel(Dark_Blue())
+    val c2 = new Codel(Dark_Red())
     assert(c1.get_lightness_difference(c2) == 2)
   }
 
   test("Lightness difference between normal and dark"){
     val c1 = new Codel(Normal_Blue())
-    val c2 = new Codel(Dark_Blue())
+    val c2 = new Codel(Dark_Magenta())
     assert(c1.get_lightness_difference(c2) == 1)
   }
 
   test("Lightness difference between normal and light"){
     val c1 = new Codel(Normal_Blue())
-    val c2 = new Codel(Light_Blue())
+    val c2 = new Codel(Light_Green())
     assert(c1.get_lightness_difference(c2) == 2)
   }
 
   test("Lightness difference between dark and light"){
     val c1 = new Codel(Dark_Blue())
-    val c2 = new Codel(Light_Blue())
+    val c2 = new Codel(Light_Cyan())
     assert(c1.get_lightness_difference(c2) == 1)
   }
 
   test("Lightness difference between dark and normal"){
     val c1 = new Codel(Dark_Blue())
-    val c2 = new Codel(Normal_Blue())
+    val c2 = new Codel(Normal_Yellow())
     assert(c1.get_lightness_difference(c2) == 2)
   }
 
@@ -103,14 +103,44 @@ class CodelTest extends FunSuite{
 
   test("Lightness difference between light and light"){
     val c1 = new Codel(Light_Blue())
-    val c2 = new Codel(Light_Blue())
+    val c2 = new Codel(Light_Green())
     assert(c1.get_lightness_difference(c2) == 0)
   }
 
   test("Lightness difference between dark and dark"){
     val c1 = new Codel(Dark_Blue())
-    val c2 = new Codel(Dark_Blue())
+    val c2 = new Codel(Dark_Red())
     assert(c1.get_lightness_difference(c2) == 0)
+  }
+
+  test("Hue differnce between red and yellow"){
+    val c1 = new Codel(Light_Red())
+    val c2 = new Codel(Normal_Yellow())
+    assert(c1.get_hue_difference(c2) == 1)
+  }
+
+  test("Hue differnce between red and cyan"){
+    val c1 = new Codel(Light_Red())
+    val c2 = new Codel(Normal_Cyan())
+    assert(c1.get_hue_difference(c2) == 3)
+  }
+
+  test("Hue differnce between red and magenta"){
+    val c1 = new Codel(Light_Red())
+    val c2 = new Codel(Normal_Magenta())
+    assert(c1.get_hue_difference(c2) == 5)
+  }
+
+  test("Hue differnce between magenta and red"){
+    val c1 = new Codel(Light_Magenta())
+    val c2 = new Codel(Normal_Red())
+    assert(c1.get_hue_difference(c2) == 1)
+  }
+
+  test("Hue differnce between green and yellow"){
+    val c1 = new Codel(Dark_Green())
+    val c2 = new Codel(Light_Yellow())
+    assert(c1.get_hue_difference(c2) == 5)
   }
 }
 
