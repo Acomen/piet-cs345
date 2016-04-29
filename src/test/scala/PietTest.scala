@@ -18,12 +18,12 @@ class CodelTest extends FunSuite{
   }
 
   test("Testing black lightness"){
-    val c = new Codel(Black())
+    val c = new Codel(Normal_Black())
     assert(c.lightness == Normal())
   }
 
   test("Testing white lightness"){
-    val c = new Codel(White())
+    val c = new Codel(Normal_White())
     assert(c.lightness == Normal())
   }
 

@@ -15,25 +15,25 @@ case class Dark() extends Lightness
  */
 sealed trait Color
 case class Light_Red() extends Color
-case class Red() extends Color
+case class Normal_Red() extends Color
 case class Dark_Red() extends Color
 case class Light_Yellow() extends Color
-case class Yellow() extends Color
+case class Normal_Yellow() extends Color
 case class Dark_Yellow() extends Color
 case class Light_Green() extends Color
-case class Green() extends Color
+case class Normal_Green() extends Color
 case class Dark_Green() extends Color
 case class Light_Cyan() extends Color
-case class Cyan() extends Color
+case class Normal_Cyan() extends Color
 case class Dark_Cyan() extends Color
 case class Light_Blue() extends Color
-case class Blue() extends Color
+case class Normal_Blue() extends Color
 case class Dark_Blue() extends Color
 case class Light_Magenta() extends Color
-case class Magenta() extends Color
+case class Normal_Magenta() extends Color
 case class Dark_Magenta() extends Color
-case class Black() extends Color
-case class White() extends Color
+case class Normal_Black() extends Color
+case class Normal_White() extends Color
 
 
 object Piet {
@@ -71,13 +71,13 @@ class Codel(val color: Color){
 		case s:Color if s == Light_Red() || s == Light_Yellow() || 
 						s == Light_Green || s == Light_Cyan() || 
 						s == Light_Blue() || s == Light_Magenta => Light()
-		case s:Color if s == Red() || s == Yellow() || 
-						s == Green || s == Cyan() || 
-						s == Blue() || s == Magenta => Normal()
+		case s:Color if s == Normal_Red() || s == Normal_Yellow() || 
+						s == Normal_Green || s == Normal_Cyan() || 
+						s == Normal_Blue() || s == Normal_Magenta => Normal()
 		case s:Color if s == Dark_Red() || s == Dark_Yellow() || 
 						s == Dark_Green || s == Dark_Cyan() || 
 						s == Dark_Blue() || s == Dark_Magenta => Dark()
-		case s: Color if s == Black() || s == White() => Normal()
+		case s: Color if s == Normal_Black() || s == Normal_White() => Normal()
 	}
 
 }
