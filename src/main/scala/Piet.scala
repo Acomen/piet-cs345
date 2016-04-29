@@ -3,11 +3,16 @@ import scala.collection.mutable
 import java.io.File
 import javax.imageio.ImageIO
 
-sealed trait Hue
-case class Light() extends Hue
-case class Normal() extends Hue
-case class Dark() extends Hue
+/* The different lightness' that can exist
+ * in a Piet program
+ */
+sealed trait Lightness
+case class Light() extends Lightness
+case class Normal() extends Lightness
+case class Dark() extends Lightness
 
+/* The 18 colors in a Piet Program
+ */
 sealed trait Color
 case class Light_Red() extends Color
 case class Red() extends Color
@@ -27,6 +32,8 @@ case class Dark_Blue() extends Color
 case class Light_Magenta() extends Color
 case class Magenta() extends Color
 case class Dark_Magenta() extends Color
+case class Black() extends Color
+case class White() extends Color
 
 
 object Piet {
@@ -55,9 +62,12 @@ object Piet {
 
 
 
-
+/* A codel represents a pixel in a Piet program. Pass in a color,
+ * and Codel(color) determines the hue and lightness, which are used
+ * when interpreting a Piet program 
+ */
 class Codel(val color: Color){
-	val hue = color match {
+	val lightness = color match {
 		case s:Color if s == Light_Red() || s == Light_Yellow() || 
 						s == Light_Green || s == Light_Cyan() || 
 						s == Light_Blue() || s == Light_Magenta => Light()

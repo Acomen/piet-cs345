@@ -2,19 +2,19 @@ package pietcs345
 import org.scalatest.FunSuite
 
 class CodelTest extends FunSuite{
-  test("Testing light red hue"){
+  test("Testing light red lightness"){
     val c = new Codel(Light_Red())
-    assert(c.hue == Light())
+    assert(c.lightness == Light())
   }
 
-  test("Testing dark red hue"){
+  test("Testing dark red lightness"){
     val c = new Codel(Dark_Red())
-    assert(c.hue == Dark())
+    assert(c.lightness == Dark())
   }
 
-  test("Testing light yellow hue"){
+  test("Testing light yellow lightness"){
     val c = new Codel(Light_Yellow())
-    assert(c.hue == Light())    
+    assert(c.lightness == Light())    
   }
 
 }
