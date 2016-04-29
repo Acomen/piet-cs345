@@ -64,8 +64,27 @@ class CodelTest extends FunSuite{
     assert(c.hue == null)
     assert(c.color == White())
   }
+}
 
+class ProgramTest extends FunSuite {
 
+  test("Simple program test"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 //light red
+    arr(0)(1) = 0xFFFF0000 //normal red
+    arr(1)(0) = 0xFFC00000 //dark red
+    arr(1)(1) = 0xFF000000 //black
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).lightness == Light())
+    assert(p.codel_arr(0)(0).hue == Red())
+    assert(p.codel_arr(0)(1).lightness == Normal())
+    assert(p.codel_arr(0)(1).hue == Red())
+    assert(p.codel_arr(1)(0).lightness == Dark())
+    assert(p.codel_arr(1)(0).hue == Red())
+    assert(p.codel_arr(1)(1).lightness == null)
+    assert(p.codel_arr(1)(1).hue == null)
+    assert(p.codel_arr(1)(1).color == Black())
+  }
 }
 
 class StackTest extends FunSuite {

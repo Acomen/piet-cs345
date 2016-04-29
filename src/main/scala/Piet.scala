@@ -3,7 +3,7 @@ import scala.collection.mutable
 import java.io.File
 import javax.imageio.ImageIO
 
-/* The different lightness' that can exist
+/* The different lightness that can exist
  * in a Piet program
  */
 sealed trait Lightness
@@ -11,7 +11,7 @@ case class Light() extends Lightness
 case class Normal() extends Lightness
 case class Dark() extends Lightness
 
-/* The 6 different hue's that appear
+/* The 6 different hues that appear
  * in a piet program
  *
  */
@@ -52,27 +52,17 @@ object Piet {
   def main(args: Array[String]) {
   	val photo = ImageIO.read(new File("src/main/resources/piet_hello_2.gif"))
   	var arr = Array.ofDim[Int](photo.getWidth, photo.getHeight)
-  	for(i <- 0 until photo.getWidth){
-  		for(j <- 0 until photo.getHeight){
-  			arr(i)(j) = photo.getRGB(i, j)
+  	for(i <- 0 until photo.getHeight){
+  		for(j <- 0 until photo.getWidth){
+  			arr(i)(j) = photo.getRGB(j, i)
   		}
   	}
 
-  	var s = ""
-  	for(i <- 0 until photo.getWidth){
-  		s = s + "["
-  		for(j <- 0 until photo.getHeight){
-  			s = s + Integer.toHexString(arr(i)(j)) + ","
-  		}
-  		s = s + "]\n"
-  	}
-
-  	println(s)
+  	val p = new Program(arr, photo.getWidth, photo.getHeight)
+  	p.print()
 
   }
 }
-
-
 
 /* A codel represents a pixel in a Piet program. Pass in a color,
  * and Codel(Color) determines the hue and lightness, which are used
@@ -110,6 +100,73 @@ class Codel(val value: Color){
 	}
 
 	val color = value
+}
+
+/* Pass in a 2-d array representing the Piet program, and this does stuff
+ * to-do: have it create a 2-d array of codels.
+ */
+class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
+	var codel_arr = Array.ofDim[Codel](columns, rows)
+
+	for(i <- 0 until rows){
+		for(j <- 0 until columns){
+			codel_arr(i)(j) = arr(i)(j) match {
+				case s:Int if s == 0xFFFFC0C0 => new Codel(Light_Red())
+				case s:Int if s == 0xFFFF0000 => new Codel(Normal_Red())
+				case s:Int if s == 0xFFC00000 => new Codel(Dark_Red())
+				case s:Int if s == 0xFFFFFFC0 => new Codel(Light_Yellow())
+				case s:Int if s == 0xFFFFFF00 => new Codel(Normal_Yellow())
+				case s:Int if s == 0xFFC0C000 => new Codel(Dark_Yellow())
+				case s:Int if s == 0xFFC0FFC0 => new Codel(Light_Green())
+				case s:Int if s == 0xFF00FF00 => new Codel(Normal_Green())
+				case s:Int if s == 0xFF00C000 => new Codel(Dark_Green())
+				case s:Int if s == 0xFFC0FFFF => new Codel(Light_Cyan())
+				case s:Int if s == 0xFF00FFFF => new Codel(Normal_Cyan())
+				case s:Int if s == 0xFF00C0C0 => new Codel(Dark_Cyan())
+				case s:Int if s == 0xFFC0C0FF => new Codel(Light_Blue())
+				case s:Int if s == 0xFF0000FF => new Codel(Normal_Blue())
+				case s:Int if s == 0xFF0000C0 => new Codel(Dark_Blue())
+				case s:Int if s == 0xFFFFC0FF => new Codel(Light_Magenta())
+				case s:Int if s == 0xFFFF00FF => new Codel(Normal_Magenta())
+				case s:Int if s == 0xFFC000C0 => new Codel(Dark_Magenta())
+				case s:Int if s == 0xFFFFFFFF => new Codel(White())
+				case s:Int if s == 0xFF000000 => new Codel(Black())
+			}
+		}
+	}
+
+	//temporary print function (for testing)
+	def print() = {
+	  	var s = ""
+	  	for(i <- 0 until rows){
+	  		s = s + "["
+	  		for(j <- 0 until columns){
+	  			var light = codel_arr(i)(j) match {
+		  			case s:Codel if s.lightness == Light() => "Light "
+		  			case s:Codel if s.lightness == Normal() => "Normal "
+		  			case s:Codel if s.lightness == Dark() => "Dark "
+		  			case s:Codel if s.lightness == null => ""
+	  			}
+	  			var hue = codel_arr(i)(j) match {
+		  			case s:Codel if s.hue == Red() => "Red"
+		  			case s:Codel if s.hue == Yellow() => "Yellow"
+		  			case s:Codel if s.hue == Green() => "Green"
+		  			case s:Codel if s.hue == Cyan() => "Cyan"
+		  			case s:Codel if s.hue == Blue() => "Blue"
+		  			case s:Codel if s.hue == Magenta() => "Magenta"
+		  			case s:Codel if s.hue == null => ""
+	  			}
+	  			var color = codel_arr(i)(j) match {
+	  				case s:Codel if s.hue == null && s.color == Black() => "Black"
+	  				case s:Codel if s.hue == null && s.color == White() => "White"
+	  				case s:Codel if s.hue != null => ""
+	  			}
+	  			s = s + light + hue + color + ","
+	  		}
+	  		s = s + "]\n"
+	  	}
+	  	println(s)
+	}
 }
 
 /*	Functions as the stack used in evaluating a piet program.
