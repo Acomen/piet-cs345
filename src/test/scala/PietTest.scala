@@ -1,6 +1,24 @@
 package pietcs345
 import org.scalatest.FunSuite
- 
+
+class CodelTest extends FunSuite{
+  test("Testing light red hue"){
+    val c = new Codel(Light_Red())
+    assert(c.hue == Light())
+  }
+
+  test("Testing dark red hue"){
+    val c = new Codel(Dark_Red())
+    assert(c.hue == Dark())
+  }
+
+  test("Testing light yellow hue"){
+    val c = new Codel(Light_Yellow())
+    assert(c.hue == Light())    
+  }
+
+}
+
 class StackTest extends FunSuite {
  
   test("Stack length()") {
@@ -187,6 +205,4 @@ class StackTest extends FunSuite {
    	assert(s.pop() == 12)
 
   }
-
-
 }

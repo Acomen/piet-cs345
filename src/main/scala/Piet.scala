@@ -3,6 +3,32 @@ import scala.collection.mutable
 import java.io.File
 import javax.imageio.ImageIO
 
+sealed trait Hue
+case class Light() extends Hue
+case class Normal() extends Hue
+case class Dark() extends Hue
+
+sealed trait Color
+case class Light_Red() extends Color
+case class Red() extends Color
+case class Dark_Red() extends Color
+case class Light_Yellow() extends Color
+case class Yellow() extends Color
+case class Dark_Yellow() extends Color
+case class Light_Green() extends Color
+case class Green() extends Color
+case class Dark_Green() extends Color
+case class Light_Cyan() extends Color
+case class Cyan() extends Color
+case class Dark_Cyan() extends Color
+case class Light_Blue() extends Color
+case class Blue() extends Color
+case class Dark_Blue() extends Color
+case class Light_Magenta() extends Color
+case class Magenta() extends Color
+case class Dark_Magenta() extends Color
+
+
 object Piet {
   def main(args: Array[String]) {
   	val photo = ImageIO.read(new File("src/main/resources/piet_hello_2.gif"))
@@ -27,8 +53,25 @@ object Piet {
   }
 }
 
-/*
- *	Functions as the stack used in evaluating a piet program.
+
+
+
+class Codel(val color: Color){
+	val hue = color match {
+		case s:Color if s == Light_Red() || s == Light_Yellow() || 
+						s == Light_Green || s == Light_Cyan() || 
+						s == Light_Blue() || s == Light_Magenta => Light()
+		case s:Color if s == Red() || s == Yellow() || 
+						s == Green || s == Cyan() || 
+						s == Blue() || s == Magenta => Normal()
+		case s:Color if s == Dark_Red() || s == Dark_Yellow() || 
+						s == Dark_Green || s == Dark_Cyan() || 
+						s == Dark_Blue() || s == Dark_Magenta => Dark()
+	}
+
+}
+
+/*	Functions as the stack used in evaluating a piet program.
  *	Various commands can be called on the stack, based on how the
  *	piet image is interpreted. 
  *
