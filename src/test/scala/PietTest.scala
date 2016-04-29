@@ -64,6 +64,54 @@ class CodelTest extends FunSuite{
     assert(c.hue == null)
     assert(c.color == White())
   }
+
+  test("Lightness difference between light and dark"){
+    val c1 = new Codel(Light_Blue())
+    val c2 = new Codel(Dark_Blue())
+    assert(c1.get_lightness_difference(c2) == 2)
+  }
+
+  test("Lightness difference between normal and dark"){
+    val c1 = new Codel(Normal_Blue())
+    val c2 = new Codel(Dark_Blue())
+    assert(c1.get_lightness_difference(c2) == 1)
+  }
+
+  test("Lightness difference between normal and light"){
+    val c1 = new Codel(Normal_Blue())
+    val c2 = new Codel(Light_Blue())
+    assert(c1.get_lightness_difference(c2) == 2)
+  }
+
+  test("Lightness difference between dark and light"){
+    val c1 = new Codel(Dark_Blue())
+    val c2 = new Codel(Light_Blue())
+    assert(c1.get_lightness_difference(c2) == 1)
+  }
+
+  test("Lightness difference between dark and normal"){
+    val c1 = new Codel(Dark_Blue())
+    val c2 = new Codel(Normal_Blue())
+    assert(c1.get_lightness_difference(c2) == 2)
+  }
+
+  test("Lightness difference between normal and normal"){
+    val c1 = new Codel(Normal_Blue())
+    val c2 = new Codel(Normal_Blue())
+    assert(c1.get_lightness_difference(c2) == 0)
+  }
+
+  test("Lightness difference between light and light"){
+    val c1 = new Codel(Light_Blue())
+    val c2 = new Codel(Light_Blue())
+    assert(c1.get_lightness_difference(c2) == 0)
+  }
+
+  test("Lightness difference between dark and dark"){
+    val c1 = new Codel(Dark_Blue())
+    val c2 = new Codel(Dark_Blue())
+    assert(c1.get_lightness_difference(c2) == 0)
+  }
 }
 
 class ProgramTest extends FunSuite {

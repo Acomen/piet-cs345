@@ -100,6 +100,39 @@ class Codel(val value: Color){
 	}
 
 	val color = value
+
+	/* Returns the difference in the lightness between two codels
+	 * The lightness cycle is: Light -> Normal -> Dark -> Light
+	 */
+	def get_lightness_difference(other: Codel) : Int = {
+		val light_cycle = Array[Lightness](Light(), Normal(), Dark())
+		val this_light = lightness
+
+		var index = 0
+		var matched = false
+		while(!matched){
+			if(lightness == light_cycle(index))
+				matched = true
+			else
+				index = index + 1
+		}
+
+		var count = 0
+		matched = false
+		while(!matched){
+			if(index >= light_cycle.length)
+				index = 0
+
+			if(other.lightness == light_cycle(index))
+				matched = true
+			else
+				count = count+1
+
+			index = index + 1
+		}
+
+		return count
+	}
 }
 
 /* Pass in a 2-d array representing the Piet program, and this does stuff
