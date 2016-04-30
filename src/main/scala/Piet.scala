@@ -69,7 +69,10 @@ object Piet {
  * when interpreting a Piet program. Hue and lightness are encoded 
  * separately to make calculations more compact during interpretation
  */
-class Codel(val value: Color){
+class Codel(val value: Color, val row_val : Int, val col_val : Int){
+	val row = row_val
+	val col = col_val
+
 	val lightness = value match {
 		case s:Color if s == Light_Red() || s == Light_Yellow() || 
 						s == Light_Green() || s == Light_Cyan() || 
@@ -159,26 +162,26 @@ class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
 	for(i <- 0 until rows){
 		for(j <- 0 until columns){
 			codel_arr(i)(j) = arr(i)(j) match {
-				case s:Int if s == 0xFFFFC0C0 => new Codel(Light_Red())
-				case s:Int if s == 0xFFFF0000 => new Codel(Normal_Red())
-				case s:Int if s == 0xFFC00000 => new Codel(Dark_Red())
-				case s:Int if s == 0xFFFFFFC0 => new Codel(Light_Yellow())
-				case s:Int if s == 0xFFFFFF00 => new Codel(Normal_Yellow())
-				case s:Int if s == 0xFFC0C000 => new Codel(Dark_Yellow())
-				case s:Int if s == 0xFFC0FFC0 => new Codel(Light_Green())
-				case s:Int if s == 0xFF00FF00 => new Codel(Normal_Green())
-				case s:Int if s == 0xFF00C000 => new Codel(Dark_Green())
-				case s:Int if s == 0xFFC0FFFF => new Codel(Light_Cyan())
-				case s:Int if s == 0xFF00FFFF => new Codel(Normal_Cyan())
-				case s:Int if s == 0xFF00C0C0 => new Codel(Dark_Cyan())
-				case s:Int if s == 0xFFC0C0FF => new Codel(Light_Blue())
-				case s:Int if s == 0xFF0000FF => new Codel(Normal_Blue())
-				case s:Int if s == 0xFF0000C0 => new Codel(Dark_Blue())
-				case s:Int if s == 0xFFFFC0FF => new Codel(Light_Magenta())
-				case s:Int if s == 0xFFFF00FF => new Codel(Normal_Magenta())
-				case s:Int if s == 0xFFC000C0 => new Codel(Dark_Magenta())
-				case s:Int if s == 0xFFFFFFFF => new Codel(White())
-				case s:Int if s == 0xFF000000 => new Codel(Black())
+				case s:Int if s == 0xFFFFC0C0 => new Codel(Light_Red(), i, j)
+				case s:Int if s == 0xFFFF0000 => new Codel(Normal_Red(), i, j)
+				case s:Int if s == 0xFFC00000 => new Codel(Dark_Red(), i, j)
+				case s:Int if s == 0xFFFFFFC0 => new Codel(Light_Yellow(), i, j)
+				case s:Int if s == 0xFFFFFF00 => new Codel(Normal_Yellow(), i, j)
+				case s:Int if s == 0xFFC0C000 => new Codel(Dark_Yellow(), i, j)
+				case s:Int if s == 0xFFC0FFC0 => new Codel(Light_Green(), i, j)
+				case s:Int if s == 0xFF00FF00 => new Codel(Normal_Green(), i, j)
+				case s:Int if s == 0xFF00C000 => new Codel(Dark_Green(), i, j)
+				case s:Int if s == 0xFFC0FFFF => new Codel(Light_Cyan(), i, j)
+				case s:Int if s == 0xFF00FFFF => new Codel(Normal_Cyan(), i, j)
+				case s:Int if s == 0xFF00C0C0 => new Codel(Dark_Cyan(), i, j)
+				case s:Int if s == 0xFFC0C0FF => new Codel(Light_Blue(), i, j)
+				case s:Int if s == 0xFF0000FF => new Codel(Normal_Blue(), i, j)
+				case s:Int if s == 0xFF0000C0 => new Codel(Dark_Blue(), i, j)
+				case s:Int if s == 0xFFFFC0FF => new Codel(Light_Magenta(), i, j)
+				case s:Int if s == 0xFFFF00FF => new Codel(Normal_Magenta(), i, j)
+				case s:Int if s == 0xFFC000C0 => new Codel(Dark_Magenta(), i, j)
+				case s:Int if s == 0xFFFFFFFF => new Codel(White(), i, j)
+				case s:Int if s == 0xFF000000 => new Codel(Black(), i, j)
 			}
 		}
 	}
