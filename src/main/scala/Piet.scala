@@ -72,6 +72,7 @@ object Piet {
 class Codel(val value: Color, val row_val : Int, val col_val : Int){
 	val row = row_val
 	val col = col_val
+	var block : ColorBlock = null
 
 	val lightness = value match {
 		case s:Color if s == Light_Red() || s == Light_Yellow() || 
@@ -103,6 +104,10 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 	}
 
 	val color = value
+
+	def set_block(parent : ColorBlock) {
+		block = parent
+	}
 
 	/* Returns the difference in the lightness between two codels
 	 * The lightness cycle is: Light -> Normal -> Dark -> Light
@@ -150,6 +155,20 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 		}
 
 		return count
+	}
+}
+
+/* Color blocks are a group of contiguous codels of the same color
+ * They keep track of all contiguous codels, since the interpreter
+ * depends on color blocks
+ */
+class ColorBlock(val seed : Codel){
+	var codels = Array[Codel](seed)
+	seed.set_block(this)
+
+	def append_codel(x : Codel){
+		x.set_block(this)
+		codels = codels :+ x
 	}
 }
 

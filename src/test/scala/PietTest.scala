@@ -144,6 +144,37 @@ class CodelTest extends FunSuite{
   }
 }
 
+class ColorBlockTest extends FunSuite {
+  test("Creating a color block"){
+    val c = new Codel(Dark_Green(), 0, 0)
+    val b = new ColorBlock(c)
+    assert(b.codels.length == 1)
+  }
+
+  test("Adding a codel to a color block"){
+    val c1 = new Codel(Light_Blue(), 0, 0)
+    val c2 = new Codel(Light_Blue(), 1, 0)
+    val b = new ColorBlock(c1)
+    b.append_codel(c2)
+    assert(b.codels.length == 2)
+  }
+
+  test("Associating block with codel on creation"){
+    val c = new Codel(Light_Blue(), 0, 0)
+    val b = new ColorBlock(c)
+    assert(c.block == b)
+  }
+
+  test("Associating block with codel on append"){
+    val c1 = new Codel(Light_Blue(), 0, 0)
+    val c2 = new Codel(Light_Blue(), 1, 0)
+    val b = new ColorBlock(c1)
+    b.append_codel(c2)
+    assert(c1.block == b)
+    assert(c2.block == b)
+  }
+}
+
 class ProgramTest extends FunSuite {
 
   test("Simple program test"){
