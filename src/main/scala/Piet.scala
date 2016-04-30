@@ -109,6 +109,10 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 		block = parent
 	}
 
+	def check_match(other : Codel) : Boolean = {
+		return hue == other.hue && lightness == other.lightness
+	}
+
 	/* Returns the difference in the lightness between two codels
 	 * The lightness cycle is: Light -> Normal -> Dark -> Light
 	 */

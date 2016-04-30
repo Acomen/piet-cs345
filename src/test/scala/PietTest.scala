@@ -142,6 +142,30 @@ class CodelTest extends FunSuite{
     val c2 = new Codel(Light_Yellow(), 0, 0)
     assert(c1.get_hue_difference(c2) == 5)
   }
+
+  test("Matching identical"){
+    val c1 = new Codel(Dark_Green(), 0, 0)
+    val c2 = new Codel(Dark_Green(), 0, 0)
+    assert(c1.check_match(c2))
+  }
+
+  test("Matching different hues"){
+    val c1 = new Codel(Dark_Red(), 0, 0)
+    val c2 = new Codel(Dark_Green(), 0, 0)
+    assert(!c1.check_match(c2))
+  }
+
+  test("Matching different lightness"){
+    val c1 = new Codel(Light_Green(), 0, 0)
+    val c2 = new Codel(Dark_Green(), 0, 0)
+    assert(!c1.check_match(c2))
+  }
+
+  test("Matching completely different"){
+    val c1 = new Codel(Light_Red(), 0, 0)
+    val c2 = new Codel(Dark_Green(), 0, 0)
+    assert(!c1.check_match(c2))
+  }
 }
 
 class ColorBlockTest extends FunSuite {
