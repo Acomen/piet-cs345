@@ -59,7 +59,7 @@ object Piet {
   	}
 
   	val p = new Program(arr, photo.getWidth, photo.getHeight)
-  	p.print()
+  	p.print_colorblock()
 
   }
 }
@@ -110,7 +110,7 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 	}
 
 	def check_match(other : Codel) : Boolean = {
-		return hue == other.hue && lightness == other.lightness
+		return color == other.color
 	}
 
 	/* Returns the difference in the lightness between two codels
@@ -174,6 +174,13 @@ class ColorBlock(val seed : Codel){
 		x.set_block(this)
 		codels = codels :+ x
 	}
+
+	def unify(other : ColorBlock){
+		for(i <- 0 until other.codels.length){
+			other.codels(i).set_block(this)
+			codels = codels :+ other.codels(i)
+		}
+	}
 }
 
 /* Pass in a 2-d array representing the Piet program, and this does stuff
@@ -182,6 +189,7 @@ class ColorBlock(val seed : Codel){
 class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
 	var codel_arr = Array.ofDim[Codel](columns, rows)
 
+	// initialize codels
 	for(i <- 0 until rows){
 		for(j <- 0 until columns){
 			codel_arr(i)(j) = arr(i)(j) match {
@@ -209,8 +217,64 @@ class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
 		}
 	}
 
+	// initialize colorblocks
+	for(i <- 0 until rows){
+		for(j <- 0 until columns){
+			var appended = false
+			if(i - 1 >= 0){
+				if(codel_arr(i-1)(j).check_match(codel_arr(i)(j))){
+					codel_arr(i-1)(j).block.append_codel(codel_arr(i)(j))
+					appended = true
+				}
+			}
+
+			if(j - 1 >= 0 && !appended){
+				if(codel_arr(i)(j-1).check_match(codel_arr(i)(j))){
+					codel_arr(i)(j-1).block.append_codel(codel_arr(i)(j))
+					appended = true
+				}
+			}
+
+			if(!appended){
+				val block = new ColorBlock(codel_arr(i)(j))
+			}
+		}
+	}			
+
+	//first colorblock pass through doesn't work properly, this unifies them.
+	//hacky!!! could probably do everything in one pass through, but this works for now
+	for(i <- 0 until rows){
+		for(j <- 0 until columns){
+			val current = codel_arr(i)(j)
+			if(i - 1 >= 0){
+				val tmp = codel_arr(i-1)(j)
+				if(tmp.check_match(current) && tmp.block != current.block){
+					current.block.unify(tmp.block)
+				}
+			}
+			if(j - 1 >= 0){
+				val tmp = codel_arr(i)(j-1)
+				if(tmp.check_match(current) && tmp.block != current.block){
+					current.block.unify(tmp.block)
+				}
+			}
+			if(i + 1 < rows){
+				val tmp = codel_arr(i+1)(j)
+				if(tmp.check_match(current) && tmp.block != current.block){
+					current.block.unify(tmp.block)
+				}
+			}
+			if(j + 1 < columns){
+				val tmp = codel_arr(i)(j+1)
+				if(tmp.check_match(current) && tmp.block != current.block){
+					current.block.unify(tmp.block)
+				}
+			}
+		}
+	}	
+
 	//temporary print function (for testing)
-	def print() = {
+	def print_codel() = {
 	  	var s = ""
 	  	for(i <- 0 until rows){
 	  		s = s + "["
@@ -236,6 +300,19 @@ class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
 	  				case s:Codel if s.hue != null => ""
 	  			}
 	  			s = s + light + hue + color + ","
+	  		}
+	  		s = s + "]\n"
+	  	}
+	  	println(s)
+	}
+
+	def print_colorblock() = {
+	  	var s = ""
+	  	for(i <- 0 until rows){
+	  		s = s + "["
+	  		for(j <- 0 until columns){
+	  			val padded = f"${codel_arr(i)(j).block.codels.length}% 3d"
+	  			s = s + padded  + ","
 	  		}
 	  		s = s + "]\n"
 	  	}
