@@ -13,7 +13,6 @@ case class Dark() extends Lightness
 
 /* The 6 different hues that appear
  * in a piet program
- *
  */
 sealed trait Hue
 case class Red() extends Hue

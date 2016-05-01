@@ -218,6 +218,84 @@ class ProgramTest extends FunSuite {
     assert(p.codel_arr(1)(1).hue == null)
     assert(p.codel_arr(1)(1).color == Black())
   }
+
+  test("Color block test, non contiguous"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 //light red
+    arr(0)(1) = 0xFFFF0000 //normal red
+    arr(1)(0) = 0xFFC00000 //dark red
+    arr(1)(1) = 0xFF000000 //black
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 1)
+    assert(p.codel_arr(0)(1).block.codels.length == 1)
+    assert(p.codel_arr(1)(0).block.codels.length == 1)
+    assert(p.codel_arr(1)(1).block.codels.length == 1)
+  }
+
+  test("Color block test, three blocks"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 
+    arr(0)(1) = 0xFFFFC0C0 
+    arr(1)(0) = 0xFFC00000 
+    arr(1)(1) = 0xFF000000 
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 2)
+    assert(p.codel_arr(0)(1).block.codels.length == 2)
+    assert(p.codel_arr(1)(0).block.codels.length == 1)
+    assert(p.codel_arr(1)(1).block.codels.length == 1)
+  }
+
+  test("Color block test, four blocks"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0  
+    arr(0)(1) = 0xFF000000  
+    arr(1)(0) = 0xFFC00000 
+    arr(1)(1) = 0xFFFFC0C0 
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 1)
+    assert(p.codel_arr(0)(1).block.codels.length == 1)
+    assert(p.codel_arr(1)(0).block.codels.length == 1)
+    assert(p.codel_arr(1)(1).block.codels.length == 1)
+  }
+
+  test("Color block test, two blocks"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 
+    arr(0)(1) = 0xFFFFC0C0 
+    arr(1)(0) = 0xFFC00000 
+    arr(1)(1) = 0xFFC00000 
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 2)
+    assert(p.codel_arr(0)(1).block.codels.length == 2)
+    assert(p.codel_arr(1)(0).block.codels.length == 2)
+    assert(p.codel_arr(1)(1).block.codels.length == 2)
+  }
+
+  test("Color block test, two blocks (2)"){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 
+    arr(0)(1) = 0xFFFFC0C0 
+    arr(1)(0) = 0xFFC00000 
+    arr(1)(1) = 0xFFFFC0C0 
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 3)
+    assert(p.codel_arr(0)(1).block.codels.length == 3)
+    assert(p.codel_arr(1)(0).block.codels.length == 1)
+    assert(p.codel_arr(1)(1).block.codels.length == 3)
+  }
+
+  test("Color block test, one block "){
+    var arr = Array.ofDim[Int](2,2)
+    arr(0)(0) = 0xFFFFC0C0 
+    arr(0)(1) = 0xFFFFC0C0 
+    arr(1)(0) = 0xFFFFC0C0 
+    arr(1)(1) = 0xFFFFC0C0
+    val p = new Program(arr, 2, 2)
+    assert(p.codel_arr(0)(0).block.codels.length == 4)
+    assert(p.codel_arr(0)(1).block.codels.length == 4)
+    assert(p.codel_arr(1)(0).block.codels.length == 4)
+    assert(p.codel_arr(1)(1).block.codels.length == 4)
+  }
 }
 
 class StackTest extends FunSuite {
