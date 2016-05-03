@@ -197,6 +197,11 @@ class ColorBlockTest extends FunSuite {
     assert(c1.block == b)
     assert(c2.block == b)
   }
+  test("Getting the correct codel upon assocation"){
+    val c = new Codel(Light_Blue(),0,0)	
+    val b = new ColorBlock(c)
+    assert(b.get_codel.check_match(c))
+  }
 }
 
 class ProgramTest extends FunSuite {
@@ -484,4 +489,230 @@ class StackTest extends FunSuite {
    	assert(s.pop() == 12)
 
   }
+}
+
+class ExecuteTest extends FunSuite {
+ 	test("Light difference 1, Hue difference 0"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Red(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+	}
+	test("Light difference 2, Hue difference 0"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Red(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(1)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+	}
+	test("Light difference 0, Hue difference 1"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Light_Yellow(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(1)
+		ps.push(2)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 3)
+	}
+	test("Light difference 1, Hue difference 1"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Yellow(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(4)
+		ps.push(1)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 3)
+	}
+	test("Light difference 2, Hue difference 1"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Yellow(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(3)
+		ps.push(2)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 6)
+	}
+	test("Light difference 0, Hue difference 2"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Light_Green(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(4)
+		ps.push(2)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 2)
+	}
+	test("Light difference 1, Hue difference 2"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Green(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(5)
+		ps.push(2)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 1)
+	}
+	test("Light difference 2, Hue difference 2"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Green(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(1)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 0)
+	}
+	test("Light difference 0, Hue difference 3"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Light_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(1)
+		ps.push(2)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 1)
+		assert (proc.get_stack.top == 0)
+	}
+	test("Light difference 1, Hue difference 3, Update Less than 4"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(3)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_dp == 3)
+	}
+	test("Light difference 1, Hue difference 3, Update Greater than 4"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(7)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_dp == 3)
+	}
+	test("Light difference 1, Hue difference 3, Update Less than 0"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(-3)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_dp == 1)
+	}
+	test("Light difference 1, Hue difference 3, Update Less than -4"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Normal_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(-5)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_dp == 3)
+	}
+	test("Light difference 2, Hue difference 3, Update Less than 2"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(1)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_cc == 1)
+	}
+	test("Light difference 2, Hue difference 3, Update Greater than 2"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(4)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_cc == 0)
+	}
+	test("Light difference 2, Hue difference 3, Update Less than 0"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Dark_Cyan(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(-5)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 0)
+		assert (proc.get_cc == 1)
+	}
+	test("Light difference 0, Hue difference 4"){
+		val p: Program = null;
+		val c1 = new Codel(Light_Red(), 0, 0)
+    		val c2 = new Codel(Light_Blue(), 1, 0)
+    		val b1 = new ColorBlock(c1)
+		val b2 = new ColorBlock(c2)
+    		val proc = new Processor(p)
+		val ps = proc.get_stack
+		ps.push(5)
+		proc.execute(b1,b2)
+		assert (proc.get_stack.length == 2)
+		assert (proc.get_stack.top == 5)
+	}
 }

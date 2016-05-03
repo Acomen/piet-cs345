@@ -46,7 +46,6 @@ case class Dark_Magenta() extends Color
 case class Black() extends Color
 case class White() extends Color
 
-
 object Piet {
   def main(args: Array[String]) {
   	val photo = ImageIO.read(new File("src/main/resources/piet_hello_2.gif"))
@@ -164,6 +163,7 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 /* Color blocks are a group of contiguous codels of the same color
  * They keep track of all contiguous codels, since the interpreter
  * depends on color blocks
+ * TODO Find color block corners
  */
 class ColorBlock(val seed : Codel){
 	var codels = Array[Codel](seed)
@@ -179,6 +179,12 @@ class ColorBlock(val seed : Codel){
 			other.codels(i).set_block(this)
 			codels = codels :+ other.codels(i)
 		}
+	}
+	def get_size() : Int={
+		return codels.length;
+	}
+	def get_codel() : Codel = {
+		return codels(0)
 	}
 }
 
@@ -228,7 +234,10 @@ class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
 			}
 
 			if(j - 1 >= 0 && !appended){
-				if(codel_arr(i)(j-1).check_match(codel_arr(i)(j))){
+	
+	/*returns the prgram stack
+	 *Used for testing
+	 */			if(codel_arr(i)(j-1).check_match(codel_arr(i)(j))){
 					codel_arr(i)(j-1).block.append_codel(codel_arr(i)(j))
 					appended = true
 				}
@@ -454,18 +463,32 @@ class ProgramStack{
 		}
 	}
 
-	/* Takes in a value from STDIN and pushes it onto the stack. 
+	/* Takes in an int value from STDIN and pushes it onto the stack. 
 	 */
-	def in() = {
+	def inint() = {
 		val input = scala.Console.readInt
 		stack.push(input)
 	}
 
+	/* Take in a char value from STDIN and pushes it onto the stack
+	*/
+	def inchar()= {
+		val input = scala.Console.readChar
+		stack.push(input.toInt)	
+	}
+
 	/* Pops the top value off of the stack and prints it to STDOUT
 	 */
-	def out() = {
+	def outint() = {
 		val output = stack.pop()
 		print(output)
+	}
+	
+	/* Pops the top value off of the stack and print it to STDOUT as a char
+	 */ 
+	def outchar() = {
+		val output = stack.pop()
+		print(output.toChar)
 	}
 
 
@@ -482,4 +505,79 @@ class ProgramStack{
 	}
 }
 
+/* An class which process an instance of a program
+ * The Direction pointer is represented by the following numbers
+ * 0 = Right
+ * 1 = Down
+ * 2 = Left
+ * 3 = Up
+ * The value of the Codel Chooser is represented by the following numbers
+ * 0 = Left
+ * 1 = Right
+ */
+class Processor(p:Program){
+	var CC = 0
+	var DP = 0
+	var ps = new ProgramStack
 
+	/*Excutes a command between two Colorblocks
+	 *
+	 */
+	 def execute( cb1:ColorBlock, cb2:ColorBlock)= {
+		val lightdif = cb1.get_codel.get_lightness_difference(cb2.get_codel)
+		val huedif = cb1.get_codel.get_hue_difference(cb2.get_codel)
+		huedif match {
+			case 0 => lightdif match {
+					case 1 => ps.push(cb2.get_size)
+					case 2 => ps.pop
+				}
+			case 1 => lightdif match {
+					case 0 => ps.add
+					case 1 => ps.subtract
+					case 2 => ps.multiply
+				}
+			case 2 => lightdif match {
+					case 0 => ps.divide
+					case 1 => ps.mod
+					case 2 => ps.not
+				}
+			case 3 => lightdif match {
+					case 0 => ps.greater
+					case 1 => { DP = (DP + ps.pop)%4
+						  if(DP < 0){
+							DP= 4+DP
+					          }}
+					case 2 => CC = (CC + scala.math.abs(ps.pop))%2
+				}
+			case 4 => lightdif match {
+					case 0 => ps.duplicate
+					case 1 => ps.roll
+					case 2 => ps.inint
+				}
+			case 5 => lightdif match {
+					case 0 => ps.inchar
+					case 1 => ps.outint
+					case 2 => ps.outchar
+				}
+		}
+	}
+	/*returns the prgram stack
+	 *Used for testing
+	 */
+	def get_stack: ProgramStack = {
+		return ps
+	}
+	
+	/*Returns the Direction Pointer
+	 *Used for testing
+	 */
+	def get_dp : Int = {
+		return DP
+	}
+	/*Returns the Codel Chooser
+	 *Used for testing
+	 */
+	def get_cc : Int = {
+		return CC
+	}	 
+}
