@@ -716,3 +716,178 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 5)
 	}
 }
+class ShapeTests extends FunSuite {
+        test("find min row with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val b = new ColorBlock(c)
+                assert(b.find_min_row == 0)
+        }
+        test("find max row with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val b = new ColorBlock(c)
+                assert(b.find_max_row == 0)
+        }
+        test("find max col with 1 block"){
+                val c = new Codel(Light_Red(),1,5)
+                val b = new ColorBlock(c)
+                assert(b.find_max_col == 5)
+        }
+        test("find min col with 1 block"){
+                val c = new Codel(Light_Red(),1,5)
+                val b = new ColorBlock(c)
+                assert(b.find_min_col == 5)
+        }
+        test("find min row with 2 blocks"){
+                val c1 = new Codel(Light_Red(),6,5)
+		val c2 = new Codel(Light_Red(),7,5)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)		
+                assert(b.find_min_row == 6)
+        }
+        test("find min col with 2 blocks"){
+                val c1 = new Codel(Light_Red(),7,4)
+		val c2 = new Codel(Light_Red(),7,5)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)		
+                assert(b.find_min_col == 4)
+        }
+        test("find max row with 2 blocks"){
+                val c1 = new Codel(Light_Red(),6,5)
+		val c2 = new Codel(Light_Red(),7,5)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)		
+                assert(b.find_max_row == 7)
+        }
+        test("find max col with 2 blocks"){
+                val c1 = new Codel(Light_Red(),7,4)
+		val c2 = new Codel(Light_Red(),7,5)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)		
+                assert(b.find_max_col == 5)
+        }
+	test("find min col with 5 blocks"){
+                val c1 = new Codel(Light_Red(),5,5)
+		val c2 = new Codel(Light_Red(),6,5)
+		val c3 = new Codel(Light_Red(),4,5)
+		val c4 = new Codel(Light_Red(),5,6)
+		val c5 = new Codel(Light_Red(),5,4)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_min_col == 4)
+        }
+	test("find max col with 5 blocks"){
+                val c1 = new Codel(Light_Red(),5,5)
+		val c2 = new Codel(Light_Red(),6,5)
+		val c3 = new Codel(Light_Red(),4,5)
+		val c4 = new Codel(Light_Red(),5,6)
+		val c5 = new Codel(Light_Red(),5,4)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_max_col == 6)
+        }
+	test("find min row with 5 blocks"){
+                val c1 = new Codel(Light_Red(),5,5)
+		val c2 = new Codel(Light_Red(),6,5)
+		val c3 = new Codel(Light_Red(),4,5)
+		val c4 = new Codel(Light_Red(),5,6)
+		val c5 = new Codel(Light_Red(),5,4)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_min_row == 4)
+        }
+	test("find max row with 5 blocks"){
+                val c1 = new Codel(Light_Red(),5,5)
+		val c2 = new Codel(Light_Red(),6,5)
+		val c3 = new Codel(Light_Red(),4,5)
+		val c4 = new Codel(Light_Red(),5,6)
+		val c5 = new Codel(Light_Red(),5,4)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_max_row == 6)
+        }
+        test("find min row cond with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val d = new ColorBlock(c)
+                assert(d.find_min_row_cond(0) == 0)
+        }
+        test("find min col cond with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val b = new ColorBlock(c)
+                assert(b.find_min_col_cond(0) == 0)
+        }
+        test("find max row cond with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val b = new ColorBlock(c)
+                assert(b.find_max_row_cond(0) == 0)
+        }
+        test("find max col cond with 1 block"){
+                val c = new Codel(Light_Red(),0,0)
+                val b = new ColorBlock(c)
+                assert(b.find_max_col_cond(0) == 0)
+        }
+	test("find max row cond with 5 blocks, testing col limit"){
+                val c1 = new Codel(Light_Red(),1,1)
+		val c2 = new Codel(Light_Red(),2,1)
+		val c3 = new Codel(Light_Red(),0,1)
+		val c4 = new Codel(Light_Red(),1,2)
+		val c5 = new Codel(Light_Red(),1,0)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_max_row_cond(0) == 1)
+        }
+	test("find max col cond with 5 blocks, testing row limit"){
+                val c1 = new Codel(Light_Red(),1,1)
+		val c2 = new Codel(Light_Red(),2,1)
+		val c3 = new Codel(Light_Red(),0,1)
+		val c4 = new Codel(Light_Red(),1,2)
+		val c5 = new Codel(Light_Red(),1,0)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_max_col_cond(2) == 1)
+        }
+	test("find min row cond with 5 blocks, testing col limit"){
+                val c1 = new Codel(Light_Red(),1,1)
+		val c2 = new Codel(Light_Red(),2,1)
+		val c3 = new Codel(Light_Red(),0,1)
+		val c4 = new Codel(Light_Red(),1,2)
+		val c5 = new Codel(Light_Red(),1,0)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_min_row_cond(1) == 0)
+        }
+	test("find min col cond with 5 blocks, testing row limit"){
+                val c1 = new Codel(Light_Red(),1,1)
+		val c2 = new Codel(Light_Red(),2,1)
+		val c3 = new Codel(Light_Red(),0,1)
+		val c4 = new Codel(Light_Red(),1,2)
+		val c5 = new Codel(Light_Red(),1,0)
+                val b = new ColorBlock(c1)
+		b.append_codel(c2)
+		b.append_codel(c3)
+		b.append_codel(c4)
+		b.append_codel(c5)		
+                assert(b.find_min_row_cond(0) == 1)
+        }
+}
+

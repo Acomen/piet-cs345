@@ -163,7 +163,6 @@ class Codel(val value: Color, val row_val : Int, val col_val : Int){
 /* Color blocks are a group of contiguous codels of the same color
  * They keep track of all contiguous codels, since the interpreter
  * depends on color blocks
- * TODO Find color block corners
  */
 class ColorBlock(val seed : Codel){
 	var codels = Array[Codel](seed)
@@ -185,6 +184,138 @@ class ColorBlock(val seed : Codel){
 	}
 	def get_codel() : Codel = {
 		return codels(0)
+	}
+	
+	/* finds the minimum row number of a colorblock
+	 */
+	def find_min_row : Int = {
+		var min = codels(0).row
+		for(i <- 1 until codels.length){
+			if(codels(i).row<min){
+				min = codels(i).row 
+			}
+	    	}
+		return min
+	}
+
+	/* finds the maximum row number of a colorblock
+	 */
+	def find_max_row : Int = {
+		var max = codels(0).row
+		for(i <- 1 until codels.length){
+			if(codels(i).row>max){
+				max = codels(i).row 
+			}
+	    	}
+		return max
+	}
+	/* finds the minimum row number of a colorblock
+	 */
+	def find_min_col : Int = {
+		var min = codels(0).col
+		for(i <- 1 until codels.length){
+			if(codels(i).col<min){
+				min = codels(i).col 
+			}
+	    	}
+		return min
+	}
+	/* finds the maximum co, number of a colorblock
+	 */
+	def find_max_col : Int = {
+		var max = codels(0).col
+		for(i <- 1 until codels.length){
+			if(codels(i).col>max){
+				max = codels(i).col 
+			}
+	    	}
+		return max
+	}
+	/*finds the minimum row number of a colorblock
+	 */
+	def find_min_row_cond(X:Int) : Int = {
+		var min = codels.length+2
+		for(i <- 0 until codels.length){
+			if(X == codels(i).col) {
+				if(codels(i).row<min){
+					min = codels(i).row
+				} 
+			}
+	    	}
+		return min
+	}
+	/* Finds the maximum row number in the Xth column of the colorblock
+	 */
+	def find_max_row_cond(X:Int) : Int = {
+		var max = -1
+		for(i <- 0 until codels.length){
+			if(X == codels(i).col) {
+				if(codels(i).row>max){
+					max = codels(i).row
+				} 
+			}
+	    	}
+		return max
+	}
+	/* Finds the minimum column number in the Xth row of the colorblock
+	 */
+	def find_min_col_cond(X:Int) : Int = {
+		var min = codels.length+2
+		for(i <- 0 until codels.length){
+			if(X == codels(i).row) {
+				print(codels(i).col)
+				if(codels(i).col<min){
+					min = codels(i).col
+				} 
+			}
+	    	}
+		return min
+	}
+	/* Finds the maximum column number in the Xth row of the colorblock
+	 */
+	def find_max_col_cond(X:Int) : Int = {
+		var max = -1
+		for(i <- 0 until codels.length){
+			if(X == codels(i).row) {
+				if(codels(i).col>max){
+					max = codels(i).col
+				} 
+			}
+	    	}
+		return max
+	}
+	/* Finds the furthest codel in the direction of DP in the colorblock
+	 */
+	def find_max_direction(DP:Int) : Int = {
+		DP match {
+			case 0 => return find_max_col
+			case 1 => return find_max_row
+			case 2 => return find_min_col
+			case 3 => return find_min_row
+		}
+		
+	}
+	/* Finds the second coordinate to find the codel which we should change from
+	 */
+	def find_max_chooser(CC:Int,DP:Int,dir:Int): Int = {
+		CC match {
+			case 0 => {
+				DP match {
+					case 0 => return find_min_row_cond(dir)
+					case 1 => return find_max_col_cond(dir)
+					case 2 => return find_max_row_cond(dir)
+					case 3 => return find_min_col_cond(dir)
+				}
+			}
+			case 1 => {
+				 DP match {
+					case 0 => return find_max_row_cond(dir)
+					case 1 => return find_min_col_cond(dir)
+					case 2 => return find_min_row_cond(dir)
+					case 3 => return find_max_col_cond(dir)
+				}
+			}
+		}
 	}
 }
 
@@ -519,6 +650,49 @@ class Processor(p:Program){
 	var CC = 0
 	var DP = 0
 	var ps = new ProgramStack
+	var current_cb = p.codels(0)(0).block
+	
+	def find next : ColorBlock = {
+		var attempts = 0
+		var row =0
+		var col = 0
+		while(attempts < 8){
+			var DP_val = current_cb.find_max_directionr(DP)
+			var CC_val = current_cb.find_max_chooser(CC,DP,DP_val)
+			DP match {
+				case 0 => { col = DP_val +1
+					row = CC_val
+				}
+				case 1 => { row = DP_val +1
+					col = CC_val
+				}
+				case 2 => { col = DP_val -1
+					row = CC_val
+				}
+				case 3 => { row = DP_val -1
+					col = CC_val
+				}
+
+			}
+			var codel
+			if(row > -1 && row < p.codels.length){
+				if(col > -1 && col < p.codels.length){
+					codel = p.codels(row)(col)
+					if(codel.color != Black()){
+						return codel.block
+					}
+				}
+			}
+			atempts = atempts +1
+			if(attempts % 2 ==0){
+				CC=(CC+1)%2
+			}
+			else{
+				DP = (DP+1)%4
+			} 
+		
+		}
+	}
 
 	/*Excutes a command between two Colorblocks
 	 *
