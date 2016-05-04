@@ -493,7 +493,12 @@ class StackTest extends FunSuite {
 
 class ExecuteTest extends FunSuite {
  	test("Light difference 1, Hue difference 0"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+   		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+    		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Red(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -503,7 +508,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.length == 1)
 	}
 	test("Light difference 2, Hue difference 0"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Red(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -515,7 +525,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.length == 0)
 	}
 	test("Light difference 0, Hue difference 1"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Light_Yellow(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -529,7 +544,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 3)
 	}
 	test("Light difference 1, Hue difference 1"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Yellow(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -543,7 +563,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 3)
 	}
 	test("Light difference 2, Hue difference 1"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Yellow(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -557,7 +582,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 6)
 	}
 	test("Light difference 0, Hue difference 2"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Light_Green(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -571,7 +601,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 2)
 	}
 	test("Light difference 1, Hue difference 2"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Green(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -585,7 +620,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 1)
 	}
 	test("Light difference 2, Hue difference 2"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Green(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -598,7 +638,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 0)
 	}
 	test("Light difference 0, Hue difference 3"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Light_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -612,7 +657,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_stack.top == 0)
 	}
 	test("Light difference 1, Hue difference 3, Update Less than 4"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -625,7 +675,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_dp == 3)
 	}
 	test("Light difference 1, Hue difference 3, Update Greater than 4"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -638,7 +693,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_dp == 3)
 	}
 	test("Light difference 1, Hue difference 3, Update Less than 0"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -651,7 +711,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_dp == 1)
 	}
 	test("Light difference 1, Hue difference 3, Update Less than -4"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Normal_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -664,7 +729,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_dp == 3)
 	}
 	test("Light difference 2, Hue difference 3, Update Less than 2"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -677,7 +747,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_cc == 1)
 	}
 	test("Light difference 2, Hue difference 3, Update Greater than 2"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -690,7 +765,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_cc == 0)
 	}
 	test("Light difference 2, Hue difference 3, Update Less than 0"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Dark_Cyan(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -703,7 +783,12 @@ class ExecuteTest extends FunSuite {
 		assert (proc.get_cc == 1)
 	}
 	test("Light difference 0, Hue difference 4"){
-		val p: Program = null;
+		var arr = Array.ofDim[Int](2,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000 //normal red
+		arr(1)(0) = 0xFFC00000 //dark red
+    		arr(1)(1) = 0xFF000000 //black
+   		val p = new Program(arr, 2, 2)
 		val c1 = new Codel(Light_Red(), 0, 0)
     		val c2 = new Codel(Light_Blue(), 1, 0)
     		val b1 = new ColorBlock(c1)
@@ -890,4 +975,124 @@ class ShapeTests extends FunSuite {
                 assert(b.find_min_row_cond(0) == 1)
         }
 }
-
+class find_next_test extends FunSuite {
+	test("find_next with 2 blocks"){
+		var arr = Array.ofDim[Int](1,2)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFF0000
+		val c = new Codel(Normal_Red(),0,1)
+   		val p = new Program(arr, 1, 2)
+		val pro = new Processor(p)
+		assert(pro.find_next.get_codel.check_match(c))
+	}
+	test("find_next with 4 blocks"){
+		var arr = Array.ofDim[Int](3,3)
+		arr(1)(1) = 0xFFFFC0C0 //light red
+		arr(1)(2) = 0xFFFF0000
+		arr(0)(2) = 0xFFFFFFFF
+		arr(2)(1) = 0xFFC00000
+		arr(0)(1) = 0xFFC00000
+		arr(0)(0) = 0xFFFFFFFF
+		arr(1)(0) = 0xFFC00000
+		arr(2)(2) = 0xFFFFFFFF
+		arr(2)(0) = 0xFFFFFFFF
+		val c = new Codel(Normal_Red(),0,1)
+   		val p = new Program(arr, 3, 3)
+		val pro = new Processor(p)
+		pro.current_cb = p.codel_arr(1)(1).block
+		assert(pro.find_next.get_codel.check_match(c))
+	}
+	test("find_next with 4 blocks,1 Black"){
+		var arr = Array.ofDim[Int](3,3)
+		arr(1)(1) = 0xFFFFC0C0 //light red
+		arr(1)(2) = 0xFF000000
+		arr(0)(2) = 0xFFFFFFFF
+		arr(2)(1) = 0xFFFF0000
+		arr(0)(1) = 0xFFC00000
+		arr(0)(0) = 0xFFFFFFFF
+		arr(1)(0) = 0xFFC00000
+		arr(2)(2) = 0xFFFFFFFF
+		arr(2)(0) = 0xFFFFFFFF
+		val c = new Codel(Normal_Red(),0,1)
+   		val p = new Program(arr, 3, 3)
+		val pro = new Processor(p)
+		pro.current_cb = p.codel_arr(1)(1).block
+		assert(pro.find_next.get_codel.check_match(c))
+	}
+	test("find_next with 4 black blocks"){
+		var arr = Array.ofDim[Int](3,3)
+		arr(1)(1) = 0xFFFFC0C0 //light red
+		arr(1)(2) = 0xFF000000
+		arr(0)(2) = 0xFFFFFFFF
+		arr(2)(1) = 0xFF000000
+		arr(0)(1) = 0xFF000000
+		arr(0)(0) = 0xFFFFFFFF
+		arr(1)(0) = 0xFF000000
+		arr(2)(2) = 0xFFFFFFFF
+		arr(2)(0) = 0xFFFFFFFF
+		val c = new Codel(Normal_Red(),0,1)
+   		val p = new Program(arr, 3, 3)
+		val pro = new Processor(p)
+		pro.current_cb = p.codel_arr(1)(1).block
+		assert(pro.find_next == null)
+	}
+	test("find_next chain"){
+		var arr = Array.ofDim[Int](3,3)
+		arr(0)(0) = 0xFF0000FF //Blue
+		arr(0)(1) = 0xFF000000 //Black
+		arr(0)(2) = 0xFF0000FF //Blue
+		arr(1)(0) = 0xFFFF00FF //Norm Magenta
+		arr(1)(1) = 0xFFC000C0 //Dark Magenta
+		arr(1)(2) = 0xFF0000FF //Blue
+		arr(2)(0) = 0xFF0000FF //Blue
+		arr(2)(1) = 0xFF000000 //Black
+		arr(2)(2) = 0xFF0000FF //Blue
+		val c = new Codel(Dark_Magenta(),0,1)
+   		val p = new Program(arr, 3, 3)
+		val pro = new Processor(p)
+		pro.current_cb = 
+		var next = pro.find_next
+		
+	}
+/*	test("Run Test"){
+		var arr = Array.ofDim[Int](3,3)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFFC0C0
+		arr(0)(2) = 0xFFFFC0C0
+		arr(1)(0) = 0xFF000000
+		arr(1)(1) = 0xFFFFC0C0
+		arr(1)(2) = 0xFF000000
+		arr(2)(0) = 0xFFFF0000
+		arr(2)(1) = 0xFFFF0000
+		arr(2)(2) = 0xFFFF0000
+		val c = new Codel(Normal_Red(),0,1)
+   		val p = new Program(arr, 3, 3)
+		val pro = new Processor(p)
+		pro.run
+		assert(pro.ps.top == 4)
+	}
+	test("Run Test with output"){
+		var arr = Array.ofDim[Int](3,4)
+		arr(0)(0) = 0xFFFFC0C0 //light red
+		arr(0)(1) = 0xFFFFC0C0
+		arr(0)(2) = 0xFFFFC0C0
+		arr(0)(3) = 0xFF000000
+		arr(1)(0) = 0xFF000000
+		arr(1)(1) = 0xFFFF0000
+		arr(1)(2) = 0xFFFF0000
+		arr(1)(3) = 0xFF000000
+		arr(2)(0) = 0xFFC000C0
+		arr(2)(1) = 0xFFC000C0
+		arr(2)(2) = 0xFFC000C0
+		arr(2)(3) = 0xFFC000C0
+   		val p = new Program(arr, 3, 4)
+		val pro = new Processor(p)
+		pro.run
+		assert(pro.ps.length == 0)
+	}*/
+	test("hello world")
+	{
+		Piet.main(Array())
+		assert(true)	
+	}
+}

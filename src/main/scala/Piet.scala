@@ -48,16 +48,16 @@ case class White() extends Color
 
 object Piet {
   def main(args: Array[String]) {
-  	val photo = ImageIO.read(new File("src/main/resources/piet_hello_2.gif"))
-  	var arr = Array.ofDim[Int](photo.getWidth, photo.getHeight)
-  	for(i <- 0 until photo.getHeight){
-  		for(j <- 0 until photo.getWidth){
-  			arr(i)(j) = photo.getRGB(j, i)
+  	val photo = ImageIO.read(new File("src/main/resources/helloworld.gif"))
+  	var arr = Array.ofDim[Int](photo.getHeight, photo.getWidth)
+  	for(i <- 0 until photo.getWidth){
+  		for(j <- 0 until photo.getHeight){
+  			arr(j)(i) = photo.getRGB(i,j)
   		}
   	}
-
-  	val p = new Program(arr, photo.getWidth, photo.getHeight)
-  	p.print_colorblock()
+  	val p = new Program(arr, photo.getHeight, photo.getWidth)
+  	val proc = new Processor(p)
+	proc.run
 
   }
 }
@@ -263,7 +263,6 @@ class ColorBlock(val seed : Codel){
 		var min = codels.length+2
 		for(i <- 0 until codels.length){
 			if(X == codels(i).row) {
-				print(codels(i).col)
 				if(codels(i).col<min){
 					min = codels(i).col
 				} 
@@ -322,8 +321,8 @@ class ColorBlock(val seed : Codel){
 /* Pass in a 2-d array representing the Piet program, and this does stuff
  * to-do: have it create a 2-d array of codels.
  */
-class Program(val arr: Array[Array[Int]], val columns: Int, val rows: Int){
-	var codel_arr = Array.ofDim[Codel](columns, rows)
+class Program(val arr: Array[Array[Int]], val rows: Int, val columns: Int){
+	var codel_arr = Array.ofDim[Codel](rows,columns)
 
 	// initialize codels
 	for(i <- 0 until rows){
@@ -650,48 +649,70 @@ class Processor(p:Program){
 	var CC = 0
 	var DP = 0
 	var ps = new ProgramStack
-	var current_cb = p.codels(0)(0).block
+	var current_cb = p.codel_arr(0)(0).block
 	
-	def find next : ColorBlock = {
+	def run {
+		var next_cb = this.find_next
+		while(next_cb != null){
+			print("DP ")
+			println(DP)
+			print("CC ")
+			println(CC)
+			println(current_cb.codels(0).color)
+			println(next_cb.codels(0).color)
+			val comp = new Codel(White(),0,0)
+			if(!current_cb.get_codel.check_match(comp))
+				if(!next_cb.get_codel.check_match(comp))
+					execute(current_cb,next_cb)
+			current_cb = next_cb
+			next_cb = this.find_next
+		}
+	}
+	
+	def find_next : ColorBlock = {
 		var attempts = 0
 		var row =0
 		var col = 0
 		while(attempts < 8){
-			var DP_val = current_cb.find_max_directionr(DP)
+			var DP_val = current_cb.find_max_direction(DP)
 			var CC_val = current_cb.find_max_chooser(CC,DP,DP_val)
 			DP match {
-				case 0 => { col = DP_val +1
-					row = CC_val
+				case 0 => { row = DP_val +1 
+					col = CC_val 
 				}
-				case 1 => { row = DP_val +1
-					col = CC_val
+				case 1 => { col = DP_val +1 
+					row = CC_val 
 				}
-				case 2 => { col = DP_val -1
-					row = CC_val
+				case 2 => { row = DP_val -1 
+					col = CC_val 
 				}
-				case 3 => { row = DP_val -1
-					col = CC_val
+				case 3 => { col = DP_val -1  
+					row = CC_val 
 				}
 
 			}
-			var codel
-			if(row > -1 && row < p.codels.length){
-				if(col > -1 && col < p.codels.length){
-					codel = p.codels(row)(col)
-					if(codel.color != Black()){
+			if(row > -1 && row < p.codel_arr(0).length){
+				if(col > -1 && col < p.codel_arr.length){
+					var codel = p.codel_arr(col)(row)
+					var comp = new Codel(Black(),0,0)
+					if(!codel.check_match(comp))
 						return codel.block
-					}
+					else
+						println("hit black")
 				}
 			}
-			atempts = atempts +1
-			if(attempts % 2 ==0){
+			if(attempts % 2 == 0){
 				CC=(CC+1)%2
+				println("update CC")
 			}
 			else{
 				DP = (DP+1)%4
-			} 
+				println("update DP")
+			}
+			attempts = attempts +1 
 		
 		}
+		return null
 	}
 
 	/*Excutes a command between two Colorblocks
@@ -702,7 +723,7 @@ class Processor(p:Program){
 		val huedif = cb1.get_codel.get_hue_difference(cb2.get_codel)
 		huedif match {
 			case 0 => lightdif match {
-					case 1 => ps.push(cb2.get_size)
+					case 1 => ps.push(cb1.get_size)
 					case 2 => ps.pop
 				}
 			case 1 => lightdif match {
@@ -726,10 +747,10 @@ class Processor(p:Program){
 			case 4 => lightdif match {
 					case 0 => ps.duplicate
 					case 1 => ps.roll
-					case 2 => ps.inint
+					case 2 => print("no input")
 				}
 			case 5 => lightdif match {
-					case 0 => ps.inchar
+					case 0 => print("no_input")
 					case 1 => ps.outint
 					case 2 => ps.outchar
 				}
